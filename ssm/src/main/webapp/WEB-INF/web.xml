@@ -5,6 +5,12 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
 	http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 	
+	<!-- 动态的设置项目运行路径，注意：每个项目param-value不能重复 -->
+	<context-param>
+		<param-name>webAppRootKey</param-name>
+		<param-value>ssm.root</param-value>
+	</context-param>
+	
 	<!-- 启动Spring大容器，将Spring容器内的内容纳入到WEB容器中 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
@@ -12,6 +18,21 @@
 	</context-param>	
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+	<!-- 配置log4j日志框架 -->
+	<context-param>
+		<param-name>log4jConfigLocation</param-name>
+		<param-value>classpath:log4j.xml</param-value>
+	</context-param>
+	<!-- 每隔1分钟刷新一次日志文件数量，保持最大文件量 -->
+	<context-param>
+		<param-name>log4jRefreshInterval</param-name>
+		<param-value>60000</param-value>
+	</context-param>
+	
+	<listener>
+		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
 	</listener>
 	
 	<!-- 关于处理HTTP请求中文乱码的过滤器-->
@@ -27,6 +48,32 @@
 		<filter-name>characterEncodingFilter</filter-name>
 		<servlet-name>spring</servlet-name>
 	</filter-mapping>
+	
+	<!-- rest架构风格中，form提交时，将POST请求修改为PUT/DELETE -->
+	<filter>
+        <filter-name>HttpMethodFilter</filter-name>
+        <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>HttpMethodFilter</filter-name>
+        <servlet-name>spring</servlet-name>
+    </filter-mapping>
+	
+	<!-- rest架构风格中，form提交时，将参数修改为支持PUT/DELETE提交 -->
+	<filter>  
+        <filter-name>httpPutFormContentFilter</filter-name>  
+        <filter-class>org.springframework.web.filter.HttpPutFormContentFilter</filter-class>  
+    </filter>  
+    <filter-mapping>  
+        <filter-name>httpPutFormContentFilter</filter-name>  
+       	<servlet-name>spring</servlet-name>
+    </filter-mapping>
+	
+	<!-- 如果整合的是hibernate，为了解决延迟加载no session的问题
+	需要配置OpenSessionInViewFilter -->
+	
+	
+	
 	
 	<!-- 配置前端控制器 -->
 	<servlet>

@@ -17,8 +17,33 @@
 
 </head>
 <body>
-
-	<button id="one">单个新增或修改</button>
-
+	<input type="hidden" value="25" id="u_id"/>
+	<button id="one">单个新增</button>
+	<button id="two">单个修改</button>
+	<button id="three">查询对象</button>
+	<button id="four">删除对象</button>
+	
+	 
+	<p>
+	<form id="userform" method="post" onsubmit="return changeurl()">
+		<fieldset>
+			<legend>表单提交PUT/DELETE</legend>
+			<input type="hidden" value="delete" name="_method"/>
+			
+			<input type="hidden" value="25" name="id"/>
+			<input type="text" value="王五" name="userName"/>
+			<input type="text" value="ww" name="loginName"/>
+			<input type="password" value="123456" name="password"/>
+			<input type="text" value="18" name="age"/>
+			<br/>
+			<input type="submit" value="提交"/>
+		</fieldset>
+	</form>
+	
+	
+	
+	
+	
+	
 </body>
 </html>

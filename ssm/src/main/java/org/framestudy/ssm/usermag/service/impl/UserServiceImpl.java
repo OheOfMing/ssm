@@ -16,6 +16,7 @@ public class UserServiceImpl implements IUserService{
 	@Override
 	public int saveUserInfo(UserBean user) {
 		// TODO Auto-generated method stub
+		Integer.valueOf("ads");
 		return userDaoImpl.saveUserInfo(user);
 	}
 
